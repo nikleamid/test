@@ -6,7 +6,7 @@ payload = {
         "output": "extend",
         "time_from": f,
         "time_till": g,
-        "severities": '5'
+#         "severities": '5'
     },
     "id": 2,
     "auth": AUTHTOKEN
@@ -21,13 +21,15 @@ class ReportItem(object):
     start = ""
     end = ""
     name = ""
+    severity = ""
 
 
-def make_reportItem(id, start, name):
+def make_reportItem(id, start, name, severity):
     reportItem = ReportItem()
     reportItem.id = id
     reportItem.start = start
     reportItem.name = name
+    reportItem.severity = severity
     return reportItem
 
 
@@ -59,9 +61,10 @@ for item in inputValues:
         reportItems[itemStart].end = item['time']
     else:
         reportItems[item['eventid_end']] = make_reportItem(
-            itemStart, item['time'], item['name'])
+            itemStart, item['time'], item['name'], item['severity'])
 
 for reportItemKey in reportItems:
     item = reportItems[reportItemKey]
-    logMessage = f"id: {item.id}, start: {item.start}, end: {item.end}"
-    print(logMessage)
+    if item.severity == '5':
+        logMessage = f"id: {item.id}, start: {item.start}, end: {item.end}, severity: {item.severity}"
+        print(logMessage)
