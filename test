@@ -1,3 +1,20 @@
+# У меня есть вот такой код до этого. Получение Json:
+payload = {
+    "jsonrpc": "2.0",
+    "method": "event.get",
+    "params": {
+        "output": "extend",
+        "time_from": f,
+        "time_till": g,
+        "severities": '5'
+    },
+    "id": 2,
+    "auth": AUTHTOKEN
+}
+events = requests.post(ZABBIX_API_URL, data=json.dumps(payload), headers=headers)
+events = events.json()['result']
+
+
 class ReportItem(object):
     id = ""
     start = ""
